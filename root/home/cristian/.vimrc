@@ -18,6 +18,11 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'jpo/vim-railscasts-theme'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+" Track the snippets engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -54,6 +59,15 @@ filetype plugin indent on    " required
 
 " CUSTOM OPTIONS "
 
+" Snippets options
+" Trigger configuration. Do not use <tab> if you use
+" https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
 " Airline options
 let g:airline_powerline_fonts=1
 set t_Co=256
@@ -86,3 +100,4 @@ autocmd BufWritePre * %s/\s\+$//e
 
 " avoid having comments on new line
 set formatoptions-=o
+
