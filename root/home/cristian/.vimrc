@@ -32,7 +32,7 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'szw/vim-tags'
+" Plugin 'szw/vim-tags'
 " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
@@ -41,6 +41,8 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
+" Tabular.vim
+Plugin 'godlygeek/tabular'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -96,8 +98,41 @@ colorscheme railscasts "elflord murphy, pablo...
 set wildmenu
 
 " remove trailing whitspaces on save
-autocmd BufWritePre * %s/\s\+$//e
+"autocmd BufWritePre * %s/\s\+$//e
 
 " avoid having comments on new line
 set formatoptions-=o
 
+" avoid autogenerating tags (until I find out how to include tags from
+" libraries...
+let g:vim_tags_auto_generate=0
+
+set tags=./tags,tags,/home/cristian/opt/rti_connext_dds-5.3.1/resource/idl/tags,/home/cristian/opt/rti_connext_dds-5.3.1/include/tags;
+
+" Open DDS xml structure when opening a xml file
+autocmd BufNewFile,BufRead *.xml XMLns dds
+
+" Search for text under cursor in visual mode (regex not allowed)
+vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
+
+"Tabularize commonly used symbols
+let mapleader=','
+if exists(":Tabularize")
+    nmap <Leader>a= :Tabularize /=<CR>
+    vmap <Leader>a= :Tabularize /=<CR>
+    nmap <Leader>a: :Tabularize /:\zs<CR>
+    vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+
+" Show hidden characters
+set list
+set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+hi NonText ctermfg=16 guifg=#484040
+hi SpecialKey ctermfg=16 guifg=#484040
+
+hi CursorLine guifg=NONE
+hi CursorLineNr guifg=yellow
+" hi CursorLine guibg=#505050
+
+" Syntax for ifc files
+autocmd BufNewFile,BufRead *.ifc set syntax=c
